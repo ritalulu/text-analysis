@@ -78,11 +78,51 @@ st = PorterStemmer()
 train['tweet'][:5].apply(lambda x: " ".join([st.stem(word) for word in x.split()]))
 ````
 
-## Gensim 
-[gensim – Topic Modelling in Python](https://radimrehurek.com/gensim/)
+## scikit-learn
+[scikit-learn](https://scikit-learn.org/stable/modules/feature_extraction.html)
 
+#### Bag of Words
+
+e.g. unigrams (n=1)
+````python
+from sklearn.feature_extraction.text import CountVectorizer
+bow = CountVectorizer(max_features=1000, lowercase=True, ngram_range=(1,1),analyzer = "word")
+train_bow = bow.fit_transform(train['tweet'])
+train_bow
+> > 31962x1000 sparse matrix of type '<class 'numpy.int64'>'
+	with 128380 stored elements in Compressed Sparse Row format>
+````
+
+#### TF-IDF
+
+Term frequency is simply the ratio of the count of a word present in a document, to the length of the document.
+
+Inverse document frequency (IDF) is the log of the ratio of the total number of documents to the number of documents in which that word is present. The more the value of IDF, the more unique is the word.
+
+TF-IDF is the multiplication of the TF and IDF.
+
+e.g. implementation in sklearn:
+
+````python
+from sklearn.feature_extraction.text import TfidfVectorizer
+tfidf = TfidfVectorizer(max_features=1000, lowercase=True, analyzer='word',
+ stop_words= 'english',ngram_range=(1,1))
+train_vect = tfidf.fit_transform(train['tweet'])
+
+train_vect
+> > 31962x1000 sparse matrix of type '<class 'numpy.float64'>'
+	with 114033 stored elements in Compressed Sparse Row format>
+````
 
 
 ## TextBlob
 [TextBlob: Simplified Text Processing](https://textblob.readthedocs.io/en/dev/)
+
+#### Sentiment Analysis
+
+
+
+## Gensim 
+[gensim – Topic Modelling in Python](https://radimrehurek.com/gensim/)
+
 
