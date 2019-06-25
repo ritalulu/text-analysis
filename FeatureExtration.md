@@ -118,8 +118,60 @@ train_vect
 ## TextBlob
 [TextBlob: Simplified Text Processing](https://textblob.readthedocs.io/en/dev/)
 
+#### Spelling correction
+
+Spelling correction is a useful pre-processing step because this will help us in reducing multiple copies of words.
+```python
+from textblob import TextBlob
+train['tweet'][:5].apply(lambda x: str(TextBlob(x).correct()))
+```
+
+#### Tokenization
+
+Tokenization refers to dividing the text into a sequence of words or sentences. In the below example, we have used the textblob library to first transform our tweets into a blob and then converted them into a series of words.
+
+```python
+TextBlob(train['tweet'][1]).words
+> > WordList(['thanks', 'lyft', 'credit', 'cant', 'use', 'cause', 'dont', 'offer', 'wheelchair', 'vans', 'pdx', 'disapointed', 'getthanked'])
+```
+
+#### Lemmatization
+
+Lemmatization is a more effective option than stemming because it converts the word into its root word, rather than just stripping the suffices. It makes use of the vocabulary and does a morphological analysis to obtain the root word.
+
+```python
+from textblob import Word
+train['tweet'] = train['tweet'].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()]))
+```
+
+#### N-grams
+
+N-grams are the combination of multiple words used together. Ngrams with N=1 are called unigrams. Similarly, bigrams (N=2), trigrams (N=3) and so on can also be used.
+
+e.g. extract bigrams from tweets using the ngrams function of the textblob library.
+````python
+from textblob import TextBlob
+TextBlob(train['tweet'][0]).ngrams(2)
+````
 #### Sentiment Analysis
 
+e.g. detecting the sentiment using the textblob library, it returns a tuple representing polarity and subjectivity of each tweet.
+```python
+train['tweet'][:5].apply(lambda x: TextBlob(x).sentiment)
+0    (-0.3, 0.5354166666666667)
+1                    (0.2, 0.2)
+2                    (0.0, 0.0)
+3                    (0.0, 0.0)
+4                    (0.0, 0.0)
+Name: tweet, dtype: object
+```
+
+e.g. only extract polarity as it indicates the sentiment as value nearer to 1 means a positive sentiment and values nearer to -1 means a negative sentiment. This can also work as a feature for building a machine learning model.
+
+```python
+train['sentiment'] = train['tweet'].apply(lambda x: TextBlob(x).sentiment[0] )
+train[['tweet','sentiment']].head()
+```
 
 
 ## Gensim 
