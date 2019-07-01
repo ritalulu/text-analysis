@@ -4,6 +4,7 @@
 1. [scikit-learn](https://scikit-learn.org/stable/modules/feature_extraction.html)
 2. [Ultimate guide to deal with Text Data (using Python)](https://www.analyticsvidhya.com/blog/2018/02/the-different-methods-deal-text-data-predictive-python/)
 2. [Stanford CS224N: NLP with Deep Learning](http://onlinehub.stanford.edu/cs224)
+4. [Traditional Methods for Text Data](https://towardsdatascience.com/understanding-feature-engineering-part-3-traditional-methods-for-text-data-f6f7d70acd41)
 ## Basic feature extraction using text data
 1. Number of words
 2. Number of characters
